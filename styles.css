@@ -94,7 +94,7 @@ h2 {
     font-size: 1.8rem;
 }
 
-p {
+p, ul {
     margin-bottom: 15px;
 }
 
