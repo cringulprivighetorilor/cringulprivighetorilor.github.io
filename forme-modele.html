@@ -46,7 +46,7 @@
             <div id="results"></div>
 
             <script>
-              const endpoint = 'https://script.google.com/macros/s/AKfycbyWQ7dHAuHcTUd2S0WiqgTmVlRVapyxoAlFlrT13T3oDPcRD687y0tMzVtmHfqT3UjL/exec';
+              const endpoint = 'https://script.google.com/macros/s/AKfycbxavYwb-JxN86jurz2rD8mpm7xdosQtdW6MiNCvrCrq-0mOu4EZGATRhiNzL956jQ2y/exec';
 
               async function search(event) {
                 event.preventDefault();
@@ -62,6 +62,9 @@
                 try {
                   const response = await fetch(`${endpoint}?q=${encodeURIComponent(query)}&token=${encodeURIComponent(token)}`);
                   const data = await response.json();
+                  if (!data || Object.keys(data).length === 0) {
+                    throw new Error('Nu s-au găsit rezultate pentru termenul căutat.');
+                  }
                   renderTables(data);
                 } catch (error) {
                   resultsDiv.innerHTML = `<p style="color:red;">Eroare la încărcare: ${error.message}</p>`;
