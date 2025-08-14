@@ -1,136 +1,107 @@
 ---
----
-<!DOCTYPE html>
-<html lang="ro">
-<head>
-    {% include head.html %}
-</head>
-<body>
-    <header>
-        <h1>IP Crîngul Privighetorilor</h1>
-        <p class="subtitle">Întovărășirea noastră din inima naturii - Izbiște, Criuleni</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="index.html#despre">Despre Noi</a></li>
-            <li><a href="index.html#noutati">Noutăți</a></li>
-            <li><a href="directia.html">Direcția de conducere</a></li>
-            <li><a href="documente.html">Documente</a></li>
-            <li><a href="forme-modele.html">Forme și modele</a></li>
-            <li><a href="intrebari-raspunsuri.html">Întrebari - Răspunsuri</a></li>
-            <li><a href="index.html#directii">Cum Ajungeți</a></li>
-        </ul>
-    </nav>
-    
-    <main>
-        <section class="intro" id="despre">
-            <h2>În dezvoltare</h2>
-        </section>
-        <script>
-              const endpoint = 'https://script.google.com/macros/s/AKfycbwhv-aG2copGtH9p2LiTgE_FU_vN3mKXX831O-t8cVRdlSq3EM4I1CO9B-0iL130Iu6/exec';
+layout: default
+--- 
+<main>
+    <section class="intro" id="despre">
+        <h2>În dezvoltare</h2>
+    </section>
+    <script>
+          const endpoint = 'https://script.google.com/macros/s/AKfycbwhv-aG2copGtH9p2LiTgE_FU_vN3mKXX831O-t8cVRdlSq3EM4I1CO9B-0iL130Iu6/exec';
 
-              async function search(event) {
-                event.preventDefault();
-                const query = document.getElementById('query').value.trim();
-                const token = document.getElementById('token').value.trim();
-          
-                const spinner = document.getElementById('spinner');
-                const resultsDiv = document.getElementById('results');
+          async function search(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value.trim();
+            const token = document.getElementById('token').value.trim();
+      
+            const spinner = document.getElementById('spinner');
+            const resultsDiv = document.getElementById('results');
 
-                resultsDiv.innerHTML = '';
-                spinner.style.display = 'block';
+            resultsDiv.innerHTML = '';
+            spinner.style.display = 'block';
 
-                try {
-                  const response = await fetch(`${endpoint}?q=${encodeURIComponent(query)}&token=${encodeURIComponent(token)}`);
-                  const data = await response.json();
-                  if (!data || Object.keys(data).length === 0) {
-                    throw new Error('Nu s-au găsit rezultate pentru termenul căutat.');
-                  }
-                  renderTables(data);
-                } catch (error) {
-                  resultsDiv.innerHTML = `<p style="color:red;">Eroare la încărcare.</p>`;
-                } finally {
-                  spinner.style.display = 'none';
-                }
+            try {
+              const response = await fetch(`${endpoint}?q=${encodeURIComponent(query)}&token=${encodeURIComponent(token)}`);
+              const data = await response.json();
+              if (!data || Object.keys(data).length === 0) {
+                throw new Error('Nu s-au găsit rezultate pentru termenul căutat.');
               }
+              renderTables(data);
+            } catch (error) {
+              resultsDiv.innerHTML = `<p style="color:red;">Eroare la încărcare.</p>`;
+            } finally {
+              spinner.style.display = 'none';
+            }
+          }
 
-              async function user(event) {
-                event.preventDefault();
-                const username = document.getElementById('username').value.trim();
-                const userpass = document.getElementById('userpass').value.trim();
+          async function user(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const userpass = document.getElementById('userpass').value.trim();
 
-                const spinner = document.getElementById('spinner');
-                const resultsDiv = document.getElementById('results');
+            const spinner = document.getElementById('spinner');
+            const resultsDiv = document.getElementById('results');
 
-                resultsDiv.innerHTML = '';
-                spinner.style.display = 'block';
+            resultsDiv.innerHTML = '';
+            spinner.style.display = 'block';
 
-                try {
-                  const response = await fetch(`${endpoint}?username=${encodeURIComponent(username)}&userpass=${encodeURIComponent(userpass)}`);
-                  const data = await response.json();
-                 
-                  if (!data || Object.keys(data).length === 0) {
-                    throw new Error('Nu s-au găsit rezultate pentru userul căutat.');
-                  }
-                  renderTables(data);
-                } catch (error) {
-                  resultsDiv.innerHTML = `<p style="color:red;">Eroare la încărcare.</p>`;
-                } finally {
-                  spinner.style.display = 'none';
-                }
+            try {
+              const response = await fetch(`${endpoint}?username=${encodeURIComponent(username)}&userpass=${encodeURIComponent(userpass)}`);
+              const data = await response.json();
+              
+              if (!data || Object.keys(data).length === 0) {
+                throw new Error('Nu s-au găsit rezultate pentru userul căutat.');
               }
+              renderTables(data);
+            } catch (error) {
+              resultsDiv.innerHTML = `<p style="color:red;">Eroare la încărcare.</p>`;
+            } finally {
+              spinner.style.display = 'none';
+            }
+          }
 
-              function renderTables(data) {
-                const container = document.getElementById('results');
-                for (const [sectionTitle, records] of Object.entries(data)) {
-                  if (!records.length) continue;
+          function renderTables(data) {
+            const container = document.getElementById('results');
+            for (const [sectionTitle, records] of Object.entries(data)) {
+              if (!records.length) continue;
 
-                  const headers = Object.keys(records[0]);
-                  let html = `<h3>${sectionTitle}</h3><table><thead><tr>`;
-                  headers.forEach(h => {
-                    html += `<th>${h.trim()}</th>`;
-                  });
-                  html += '</tr></thead><tbody>';
+              const headers = Object.keys(records[0]);
+              let html = `<h3>${sectionTitle}</h3><table><thead><tr>`;
+              headers.forEach(h => {
+                html += `<th>${h.trim()}</th>`;
+              });
+              html += '</tr></thead><tbody>';
 
-                  records.forEach(record => {
-                    html += '<tr>';
-                    headers.forEach(h => {
-                      html += `<td>${record[h] ?? ''}</td>`;
-                    });
-                    html += '</tr>';
-                  });
+              records.forEach(record => {
+                html += '<tr>';
+                headers.forEach(h => {
+                  html += `<td>${record[h] ?? ''}</td>`;
+                });
+                html += '</tr>';
+              });
 
-                  html += '</tbody></table>';
-                  container.innerHTML += html;
-                }
-              }
-          </script>
-        <section class="intro" id="cautare">
-            <div class="section">
-            <h2 class="section-title">Cautare informatii membru individual</h2>
-            <form onsubmit="user(event)">
-              <input type="text" id="username" placeholder="Introdu numele de utilizator" required />
-              <input type="password" id="userpass" placeholder="Introdu parola" required />
-              <button type="submit">Cautare</button>
-            </form>
-            <h2 class="section-title">Cautare informatii membrii (pentru administratie)</h2>
-            <form onsubmit="search(event)">
-              <input type="text" id="query" placeholder="Introdu termenul de cautare" required />
-              <input type="password" id="token" placeholder="Introdu parola" required />
-              <button type="submit">Cautare</button>
-            </form>
-            <div class="spinner" id="spinner">
-              <div></div>
-            </div>
-            <div id="results"></div>
-          </div>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 IP "Crîngul Privighetorilor". Toate drepturile rezervate.</p>
-        <p>Dezvoltat cu drag pentru locuitorii și prietenii întovărășirii noastre.</p>
-    </footer>
-</body>
-</html>
+              html += '</tbody></table>';
+              container.innerHTML += html;
+            }
+          }
+      </script>
+    <section class="intro" id="cautare">
+        <div class="section">
+        <h2 class="section-title">Cautare informatii membru individual</h2>
+        <form onsubmit="user(event)">
+          <input type="text" id="username" placeholder="Introdu numele de utilizator" required />
+          <input type="password" id="userpass" placeholder="Introdu parola" required />
+          <button type="submit">Cautare</button>
+        </form>
+        <h2 class="section-title">Cautare informatii membrii (pentru administratie)</h2>
+        <form onsubmit="search(event)">
+          <input type="text" id="query" placeholder="Introdu termenul de cautare" required />
+          <input type="password" id="token" placeholder="Introdu parola" required />
+          <button type="submit">Cautare</button>
+        </form>
+        <div class="spinner" id="spinner">
+          <div></div>
+        </div>
+        <div id="results"></div>
+      </div>
+    </section>
+</main>
