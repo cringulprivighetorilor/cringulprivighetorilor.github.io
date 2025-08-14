@@ -1,0 +1,7 @@
+# Minimal Jekyll config
+title: "IP Crîngul Privighetorilor"
+description: "Întovărășirea noastră din inima naturii - Izbiște, Criuleni"
+
+# Optional: if you want to use a different markdown processor
+markdown: kramdown
+highlighter: rouge
