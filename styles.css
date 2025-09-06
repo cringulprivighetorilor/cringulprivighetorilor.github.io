@@ -436,3 +436,7 @@ ol.tax-list ul {
     list-style: disc inside;
     margin: 0 1em;
 }
+
+ol.tax-list small {
+    margin: 0 1em;
+}
