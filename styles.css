@@ -426,3 +426,13 @@ button {
     display: block;
     margin: 1em auto;
 }
+
+ol.tax-list {
+    list-style: decimal inside;
+    margin: 0 1em;
+}
+
+ol.tax-list ul {
+    list-style: disc inside;
+    margin: 0 1em;
+}
